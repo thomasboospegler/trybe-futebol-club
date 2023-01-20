@@ -1,4 +1,2 @@
 joi@17.6
 express-async-errors
-cors
-@types/cors
