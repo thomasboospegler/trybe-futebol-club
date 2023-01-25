@@ -1,4 +1,6 @@
 import * as express from 'express';
+import { errorHandler } from './middlewares';
+import userRouter from './routes';
 
 class App {
   public app: express.Express;
@@ -9,7 +11,9 @@ class App {
     this.config();
 
     // Não remover essa rota
-    this.app.get('/', (req, res) => res.json({ ok: true }));
+    this.app.get('/', (_req, res) => res.json({ ok: true }));
+    this.app.use('/login', userRouter);
+    this.app.use(errorHandler);
   }
 
   private config():void {
@@ -33,3 +37,7 @@ export { App };
 
 // Essa segunda exportação é estratégica, e a execução dos testes de cobertura depende dela
 export const { app } = new App();
+
+// "id": 1,
+// "username": "thomas",
+// "role": "admin"
