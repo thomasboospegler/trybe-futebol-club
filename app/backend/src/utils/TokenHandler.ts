@@ -1,13 +1,16 @@
 import { NextFunction, Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
+import * as dotenv from 'dotenv';
 import IUser from '../interfaces';
 
-const secret = process.env.JWT_SECRET;
-const jwtConfig: jwt.SignOptions = { algorithm: 'HS256', expiresIn: '1d' };
+dotenv.config();
 
 export default class TokenHandler {
+  public secret = process.env.JWT_SECRET;
+  public jwtConfig: jwt.SignOptions = { algorithm: 'HS256', expiresIn: '1d' };
+
   public createToken = (user: IUser): string => {
-    const token = jwt.sign({ ...user }, secret as jwt.Secret, jwtConfig);
+    const token = jwt.sign({ ...user }, this.secret as jwt.Secret, this.jwtConfig);
 
     return token;
   };
@@ -17,7 +20,7 @@ export default class TokenHandler {
 
     if (!token) return res.status(404).json({ message: 'Token not found' });
 
-    jwt.verify(token, secret as jwt.Secret, (err, user) => {
+    jwt.verify(token, this.secret as jwt.Secret, (err, user) => {
       if (err) return res.status(401).json({ message: 'Token must be a valid token' });
 
       req.body = { ...user };
