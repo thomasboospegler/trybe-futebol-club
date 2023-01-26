@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcryptjs';
-import IUser from '../interfaces/IUser';
+import { IUser } from '../interfaces';
 import Token from '../utils/TokenHandler';
 import UserModel from '../database/models/UserModel';
 import ErrorHandler from '../utils/ErrorHandler';

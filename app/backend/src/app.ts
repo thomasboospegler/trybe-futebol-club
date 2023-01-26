@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { errorHandler } from './middlewares';
-import userRouter from './routes';
+import { userRouter, teamsRouter } from './routes';
 
 class App {
   public app: express.Express;
@@ -13,6 +13,7 @@ class App {
     // Não remover essa rota
     this.app.get('/', (_req, res) => res.json({ ok: true }));
     this.app.use('/login', userRouter);
+    this.app.use('/teams', teamsRouter);
     this.app.use(errorHandler);
   }
 
@@ -37,7 +38,3 @@ export { App };
 
 // Essa segunda exportação é estratégica, e a execução dos testes de cobertura depende dela
 export const { app } = new App();
-
-// "id": 1,
-// "username": "thomas",
-// "role": "admin"

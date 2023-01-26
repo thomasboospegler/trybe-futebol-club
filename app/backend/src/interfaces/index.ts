@@ -1,3 +1,7 @@
 import IUser from './IUser';
+import ITeam from './ITeam';
 
-export default IUser;
+export {
+  IUser,
+  ITeam,
+};
