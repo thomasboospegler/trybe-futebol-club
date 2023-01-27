@@ -17,13 +17,13 @@ export default class TokenHandler {
 
   public validateJWT = (req: Request, res: Response, next: NextFunction): void | Response => {
     const { authorization: token } = req.headers;
+    const reqData = req.body;
 
     if (!token) return res.status(404).json({ message: 'Token not found' });
 
     jwt.verify(token, this.secret as jwt.Secret, (err, user) => {
       if (err) return res.status(401).json({ message: 'Token must be a valid token' });
-
-      req.body = { ...user };
+      req.body = { ...user, ...reqData };
 
       next();
     });

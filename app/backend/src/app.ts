@@ -1,6 +1,6 @@
 import * as express from 'express';
 import { errorHandler } from './middlewares';
-import { userRouter, teamsRouter } from './routes';
+import { userRouter, teamsRouter, matchesRouter } from './routes';
 
 class App {
   public app: express.Express;
@@ -14,6 +14,7 @@ class App {
     this.app.get('/', (_req, res) => res.json({ ok: true }));
     this.app.use('/login', userRouter);
     this.app.use('/teams', teamsRouter);
+    this.app.use('/matches', matchesRouter);
     this.app.use(errorHandler);
   }
 
